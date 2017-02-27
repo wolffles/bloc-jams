@@ -55,9 +55,10 @@ body {
 }
 /* <:hover> is a pseudo-class*/
 
-.links-container .navbar-link:hover{
-    color: rgb{233,50,117};
-}
+.links-container .navbar-link:hover {
+     color: rgb(233,50,117);
+ }
+
 
 
 .ion-music-note, .ion-radio-waves, .ion-iphone{
