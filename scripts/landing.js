@@ -8,15 +8,13 @@ var animatePoints = function(points) {
             points[idx].style.msTransform = "scaleX(1) translateY(0)";
             points[idx].style.WebkitTransform = "scaleX(1) translateY(0)";
         };
-     for(var i = 0; i < points.length; i++){
-         revealPoint(i)
-    };
+     forEach(points,revealPoint)
 };
 /*"Attaching behavior to the scroll event"
     window is an object
     addEventListener() is a method takes 3 arguments.
         <type>, is string, required, (represents type of event for which DOM should be listening)
-        <listener>, is function, required, (Passed in as an event handler and contains the code that executes when the events fires.)
+        <listener>, is function(usually a callback), required, (Passed in as an event handler and contains the code that executes when the events fires.)
         <useCapture>, boolean, no, (Specifies whether the user wishes toinitiate capture.)
 */
 window.onload = function() {
