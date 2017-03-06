@@ -32,12 +32,22 @@ body.landing{
     width: 100%
 }
 
-.point{
-    display: table-cell;
-    position: relative;
-    padding: 2rem;
-    text-align: center;
-}
+.point {
+     position: relative;
+     padding: 2rem;
+     text-align: center;
+     opacity: 0;
+     -webkit-transform: scaleX(0.9) translateY(3rem);
+     -moz-transform: scaleX(0.9) translateY(3rem);
+     transform: scaleX(0.9) translateY(3rem);
+     -webkit-transition: all 0.25s ease-in-out;
+     -moz-transition: all 0.25s ease-in-out;
+     transition: all 0.25s ease-in-out;
+     -webkit-transition-delay: 0.2s;
+     -moz-transition-delay: 0.2s;
+     transition-delay: 0.2s;
+ }
+/* here (above) we do same property three times each to ensure it functions properly on different browsers */
 
 .point .point-title{
     font-size: 1.25rem;
