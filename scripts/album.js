@@ -57,6 +57,8 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+
+    var albumImage = document.getElementsByClassName('album-cover-art')[0];
 var setCurrentAlbum = function(album) {
     /* we selet all of the html elements required to display on 
     the album page: title, artist, release info, image, and song 
@@ -99,20 +101,16 @@ var setCurrentAlbum = function(album) {
      }
  };
 
- var albumImage = document.getElementsByClassName('album-cover-art')[0];
-
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
-    
     var list = [albumPicasso, albumMarconi, albumFood];
-    var n = 1;
-    
+    var n = 0;
+    setCurrentAlbum(list[n]);
     albumImage.addEventListener("click", function(event){
-        setCurrentAlbum(list[n]);
         n++;
         if(n == list.length) {
             n = 0;
         };
+        setCurrentAlbum(list[n]);
     });
  };
 
