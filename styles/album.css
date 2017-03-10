@@ -52,7 +52,8 @@ body.album{
 }
 
 .song-item-title {
-    width: 85%;
+    width: 85
+        %;
 }
 
 .song-item-duration {

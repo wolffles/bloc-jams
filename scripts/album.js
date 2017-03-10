@@ -29,13 +29,28 @@
          { title: 'Wrong phone number', duration: '2:15'}
      ]
  };
+// Third album
+var albumFood = {
+    title: 'The Hunger',
+    artist: 'Munchies',
+    label: 'Stovetop',
+    year: '2017',
+    albumArtUrl: 'assets/images/album_covers/02.png',
+    songs: [
+        { title: 'Pineapple Pizza!?', duration: '3:01' },
+        { title: 'Spicy Chicken Nachos', duration: '6:66' },
+        { title: 'Pulled Pork Sandwiches', duration: '3:13' },
+        { title: 'Rock Lobster!', duration: '4:20' },
+        { title: 'Scrambled Eggs and Ham', duration: '11:11' }
+    ]
+};
 
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
     + '   <td class= "song-item-number">' + songNumber + '</td>' 
     + '   <td class="song-item-title">' + songName + '</td>'
-    + '   <td class="song-item-duration>' + songLength + '</td>'
+    + '   <td class="song-item-duration">' + songLength + '</td>'
     + '</tr>'
     ;
     return template;
@@ -79,7 +94,7 @@ var setCurrentAlbum = function(album) {
 
      
     // use a for loop to add createSongRow function to add html to page.
-    for (var i = 0; i < album.songs.length; i++) {
+     for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
