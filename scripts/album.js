@@ -4,7 +4,7 @@
      artist: 'Pablo Picasso',
      label: 'Cubism',
      year: '1881',
-     albumArtUrl: 'assets/images/album_covers/01.png',
+     albumArtUrl: 'assets/images/album_covers/10.png',
      songs: [
          { title: 'Blue', duration: '4:26' },
          { title: 'Green', duration: '3:14' },
@@ -45,10 +45,26 @@ var albumFood = {
     ]
 };
 
+var albumFood = {
+    title: 'The Hunger',
+    artist: 'Munchies',
+    label: 'Stovetop',
+    year: '2017',
+    albumArtUrl: 'assets/images/album_covers/02.png',
+    songs: [
+        { title: 'Pineapple Pizza!?', duration: '3:01' },
+        { title: 'Spicy Chicken Nachos', duration: '6:66' },
+        { title: 'Pulled Pork Sandwiches', duration: '3:13' },
+        { title: 'Rock Lobster!', duration: '4:20' },
+        { title: 'Scrambled Eggs and Ham', duration: '11:11' }
+    ]
+};
+
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">'
-    + '   <td class= "song-item-number">' + songNumber + '</td>' 
+    + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
     + '   <td class="song-item-title">' + songName + '</td>'
     + '   <td class="song-item-duration">' + songLength + '</td>'
     + '</tr>'
@@ -56,6 +72,8 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+
+    var albumImage = document.getElementsByClassName('album-cover-art')[0];
 var setCurrentAlbum = function(album) {
     /* we selet all of the html elements required to display on 
     the album page: title, artist, release info, image, and song 
@@ -65,7 +83,6 @@ var setCurrentAlbum = function(album) {
     var albumTitle = document.getElementsByClassName('album-view-title')[0];
     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
     
     /* the firstChild property identifies the first child node
@@ -90,22 +107,50 @@ var setCurrentAlbum = function(album) {
      clean slate. We do the same here, at #3, and clear the album 
      song list HTML to make sure there are no interfering elements.
      */
-     albumSongList.innerHTML = '';
+     albumSongList.innerHTML = "";
 
      
     // use a for loop to add createSongRow function to add html to page.
-     for (var i = 0; i < album.songs.length; i++) {
+
+    for(var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
 
-window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+var songRows = document.getElementsByClassName('album-view-song-item');
+
+var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+
+ window.onload = function() {
+    var list = [albumPicasso, albumMarconi, albumFood];
+    var n = 0;
+    setCurrentAlbum(list[n]);
+    albumImage.addEventListener("click", function(event){
+        n++;
+        if(n == list.length) {
+            n = 0;
+        };
+        setCurrentAlbum(list[n]);
+    });
+     
+    songListContainer.addEventListener('mouseover', function(event){
+        //1
+        //console.log(event.target);
+        
+        // Only target individual song rows during event delegation
+        if (event.target.parentElement.className === 'album-view-song-item') {
+            //change the content form the number to the play button's HTML
+            event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+        }
+    });
+    for(var i = 0; i< songRows.length; i++) {
+        songRows[i].addEventListener('mouseleave', function(event) {
+            // Revert the content back to the number
+            this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+        });
+    }
  };
-
-
-
-
 
 
 
