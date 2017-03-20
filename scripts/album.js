@@ -119,10 +119,15 @@ var setCurrentAlbum = function(album) {
 
 // function takes element as a className not a css selector
 var findParentByClassName = function(element, targetClass){
-     if (element) {
-        var currentParent = element.parentElement;
+     if (element.parentElement == null) {
+        return console.log("No parent found")
+     }else {var currentParent = element.parentElement;
         while (currentParent.className !== targetClass && currentParent.className !== null) {
-            currentParent = currentParent.parentElement;
+            if (currentParent.parentElement == null){
+                return console.log("No parent with that class name.");
+            }else{ 
+                currentParent = currentParent.parentElement;
+            }
         }
         return currentParent;
     }
@@ -182,7 +187,7 @@ var currentlyPlayingSong = null;
     });
      
     songListContainer.addEventListener('mouseover', function(event){
-        //console.log(event.target);
+        //console.log(findParentByClassName(event.target,'album-view-song-item'));
         // Only target individual song rows during event delegation
         if (event.target.parentElement.className === 'album-view-song-item') {
             //change the content form the number to the play button's HTML
