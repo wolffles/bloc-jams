@@ -116,6 +116,8 @@ var setCurrentAlbum = function(album) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
+
+// function takes element as a className not a css selector
 var findParentByClassName = function(element, targetClass){
      if (element) {
         var currentParent = element.parentElement;
@@ -192,17 +194,6 @@ var currentlyPlayingSong = null;
             }
         }
     });
-   // songListContainer.addEventListener('click', function(event){
-        //alert(this.className);
-        //change the content from the number to the play button's HTML
-           // event.target.parentElement.querySelector('.song-item-number').innerHTML = pauseButtonTemplate;
-            // used this to test currentlyplayingsong value
-            //console.log(currentlyPlayingSong);
-            //console.dir(!! event.target.parentElement.querySelector('.ion-pause'));
-        
-        
-   // });
-
      
     for(var i = 0; i< songRows.length; i++) {
         songRows[i].addEventListener('mouseleave', function(event) {
@@ -220,35 +211,4 @@ var currentlyPlayingSong = null;
         })
     }
  };
-
-
-/* functionality goals
-
-1. When we click a song to play it, the song number should 
-change to a pause button:
-
-2.When the mouse leaves the table row of the currently playing
-song, the pause button should remain:
-
-3.When we switch songs, the previously playing song's table 
-cell should revert the content back to the song number:
-
-4.When we hover over each of the songs that aren't playing, 
-the play button should still appear; we don't, however, want 
-to show the play button when we hover over the playing song:
-*/
-
-
-/*sudo code
-
-create a click EventListener to change the play button 
-to a pause button
-
-stop the autoloop of mouseleave for loop on 165, to only work
-non pause button elements. turn it into a case statement
-
-only when we click on another item will the pause button change.
-
-set an exemption to the play button mouse over event.
-*/
 
