@@ -1,38 +1,34 @@
 
-var pointsArray = document.getElementsByClassName('point');
-
-var animatePoints = function(points) {
-    var revealPoint = function(idx){
-            points[idx].style.opacity = 1;
-            points[idx].style.transform = "scaleX(1) translateY(0)";
-            points[idx].style.msTransform = "scaleX(1) translateY(0)";
-            points[idx].style.WebkitTransform = "scaleX(1) translateY(0)";
-        };
-     for(var i = 0; i < points.length; i++){
-         revealPoint(i)
+var animatePoints = function() {
+    var revealPoint = function() {
+        // this here refers to each of the '.point' elements that are iterated on line 12
+        
+        $(this).css({
+            opacity: 1,
+            transform: 'scaleX(1) translateY(0)'
+        });
     };
-};
-/*"Attaching behavior to the scroll event"
-    window is an object
-    addEventListener() is a method takes 3 arguments.
-        <type>, is string, required, (represents type of event for which DOM should be listening)
-        <listener>, is function, required, (Passed in as an event handler and contains the code that executes when the events fires.)
-        <useCapture>, boolean, no, (Specifies whether the user wishes toinitiate capture.)
-*/
-window.onload = function() {
-    if(window.innerHeight > 950) {
-        animatePoints(pointsArray);
-    }
-    
-    var sellingPoints = document.getElementsByClassName('selling-points')[0];
-    var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200;
-    window.addEventListener("scroll",function(event) {
-        /* line 27 helps you console.log distance from top to spot on document.
-        console.log("current offset from the top is " + sellingPoints.getBoundingClientRect().top + "pixels");
-        */
-        if(document.documentElement.scrollTop || document.body.scrollTop >= scrollDistance){
-            animatePoints(pointsArray);
-        }
-    });
+    // <$.each()> is a function iterates over each .point 
+    // element and executes the call back function
+    $.each($('.point'),revealPoint);
 }
+$(window).load(function() {
+    // updated the innerHeight property to jQuery's height() 
+    //method, which gets or sets an objects height. 
+    // default or leaving blank means it gets the height
+    if ($(window).height() > 950){
+        animatePoints();
+    }
+    // .offset() is a jQuery method replaced getBoundingClientRect()
+    var scrollDistance = $('.selling-points').offset().top - $(window).height() + 200;
+    // addEventListener() became jQuery's <Scroll()> method. 
+    //it takes a function as an argument. and 
+    //is still an event handler.
+    $(window).scroll(function(event){
+        // $(window).scrollTrop() is a jQuery method.
+        if ($(window).scrollTop() >= scrollDistance) {
+            animatePoints();
+        }
+     });
+});
 
