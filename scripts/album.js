@@ -70,32 +70,13 @@ var createSongRow = function(songNumber, songName, songLength) {
     + '</tr>'
     ;
     var $row = $(template);
-    var clickHandler = function() {
-	   var songNumber = $(this).attr('data-song-number');
-
-	       if (currentlyPlayingSong !== null) {
-		      // Revert to song number for currently playing song because user started playing new song.
-		      var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
-              currentlyPlayingCell.html(currentlyPlayingSong);
-	       }
-           if (currentlyPlayingSong !== songNumber) {
-             // Switch from Play -> Pause button to indicate new song is playing.
-            $(this).html(pauseButtonTemplate);
-              currentlyPlayingSong = songNumber;
-            } else if (currentlyPlayingSong === songNumber) {
-              // Switch from Pause -> Play button to pause currently playing song.
-              $(this).html(playButtonTemplate);
-              currentlyPlayingSong = null;
-            }
-    };
     
     var onHover = function(event) {
-        // below declares the variable as the node '.song-item-number'
-    var songNumberCell = $(this).find('.song-item-number');
-        // below uses the method attr to return the node's, 'data-song-number' value;
-    var songNumber = songNumberCell.attr('data-song-number');
-       
-    if (songNumber !== currentlyPlayingSong) {
+            // below declares the variable as the node '.song-item-number'
+        var songNumberCell = $(this).find('.song-item-number');
+            // below uses the method attr to return the node's, 'data-song-number' value;
+        var songNumber = songNumberCell.attr('data-song-number');
+        if (songNumber !== currentlyPlayingSong) {
         songNumberCell.html(playButtonTemplate);
         }
     };
@@ -108,7 +89,45 @@ var createSongRow = function(songNumber, songName, songLength) {
         }
     };
     
-    $row.find('.song-item-number').click(clickHandler);
+    $row.click(function(event){
+        var songNumber = $(this).find(".song-item-number").attr('data-song-number')
+        if (currentlyPlayingSong !== null) {
+		      // Revert to song number for currently playing song because user started playing new song.
+		      var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
+              currentlyPlayingCell.html(currentlyPlayingSong);
+	       }
+           if (currentlyPlayingSong === songNumber) {
+              // Switch from Pause -> Play button to pause currently playing song.
+              $(this).find(".song-item-number").html(playButtonTemplate);
+              currentlyPlayingSong = null;
+            } else if (currentlyPlayingSong !== songNumber) {
+             // Switch from Play -> Pause button to indicate new song is playing.
+             $(this).find(".song-item-number").html(pauseButtonTemplate);
+              currentlyPlayingSong = songNumber;
+           }
+    });
+    /*var clickHandler = function() {
+	var songNumber = $(this).attr('data-song-number');
+
+	if (currentlyPlayingSong !== null) {
+		// Revert to song number for currently playing song because user started playing new song.
+		var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
+		currentlyPlayingCell.html(currentlyPlayingSong);
+	}
+	if (currentlyPlayingSong !== songNumber) {
+		// Switch from Play -> Pause button to indicate new song is playing.
+		$(this).html(pauseButtonTemplate);
+		currentlyPlayingSong = songNumber;
+	} else if (currentlyPlayingSong === songNumber) {
+		// Switch from Pause -> Play button to pause currently playing song.
+		$(this).html(playButtonTemplate);
+		currentlyPlayingSong = null;
+	}
+    };
+    */
+    //// ## they make a clickHandler helper function before using it. #####
+    //$row.find('.song-item-number').click(clickHandler);
+
     $row.hover(onHover, offHover);
     return $row;
 };
