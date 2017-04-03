@@ -64,7 +64,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         $lastSongNumberCell.html(lastSongNumber);
     }
     
-    function previousSong(event) {
+    var previousSong = function(event) {
         var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
         // Note that we're _decrementing_ the index here
         currentSongIndex--;
@@ -234,7 +234,7 @@ $(document).ready(function() {
         $nextSongNumberCell.html(pauseButtonTemplate);
         $lastSongNumberCell.html(lastSongNumber);
     });
-    //$previousButton.click(previousSong);
+    $previousButton.click(previousSong);
     //$nextButton.click(nextSong);
     albumImage.addEventListener("click", function(event){
         n++;
