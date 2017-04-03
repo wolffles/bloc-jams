@@ -11,25 +11,6 @@ var createSongRow = function(songNumber, songName, songLength) {
     ;
     var $row = $(template);
     
-    var onHover = function(event) {
-            // below declares the variable as the node '.song-item-number'
-        var songNumberCell = $(this).find('.song-item-number');
-            // below uses the method attr to return the node's, 'data-song-number' value;
-        var songNumber = songNumberCell.attr('data-song-number');
-        if (songNumber !== currentlyPlayingSong) {
-        songNumberCell.html(playButtonTemplate);
-        }
-    };
-    
-    var offHover = function(event) {
-        var songNumberCell = $(this).find('.song-item-number');
-        var songNumber = songNumberCell.attr('data-song-number');
-
-        if (songNumber !== currentlyPlayingSong) {
-            songNumberCell.html(songNumber);
-        }
-    };
-    
     var controlUpdate = function(){
         $('.currently-playing .song-name').text(currentSongFromAlbum.title);
         $('.currently-playing .artist-name').text(currentAlbum.artist);
@@ -94,10 +75,10 @@ var createSongRow = function(songNumber, songName, songLength) {
 
     
     $row.click(function(event){
-        var songNumber = $(this).find(".song-item-number").attr('data-song-number')
+        var songNumber = parseInt($(this).find(".song-item-number").attr('data-song-number'));
         if (currentlyPlayingSong !== null) {
               // Revert to song number for currently playing song because user started playing new song.
-              var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
+              var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSong);
               currentlyPlayingCell.html(currentlyPlayingSong);
            }
            if (currentlyPlayingSong === songNumber) {
@@ -117,6 +98,26 @@ var createSongRow = function(songNumber, songName, songLength) {
         
     });
 
+    
+    var onHover = function(event) {
+            // below declares the variable as the node '.song-item-number'
+        var songNumberCell = $(this).find('.song-item-number');
+            // below uses the method attr to return the node's, 'data-song-number' value;
+        var songNumber = parseInt(songNumberCell.attr('data-song-number'));
+        if (songNumber !== currentlyPlayingSong) {
+        songNumberCell.html(playButtonTemplate);
+        }
+    };
+    
+    var offHover = function(event) {
+        var songNumberCell = $(this).find('.song-item-number');
+        var songNumber = parseInt(songNumberCell.attr('data-song-number'));
+
+        if (songNumber !== currentlyPlayingSong) {
+            songNumberCell.html(songNumber);
+        }
+    };
+    
     $row.hover(onHover, offHover);
     return $row;
 };
@@ -148,11 +149,15 @@ var createSongRow = function(songNumber, songName, songLength) {
      }
  };
  var setSong = function(songNumber = null){
-     currentlyPlayingSong = songNumber;
+     currentlyPlayingSong = parseInt(songNumber);
      currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
     // currentAlbum is a variable set in the set current album event listener function
     // .songs is part of the hash object we created in fixtures for each album. <.songs> is the property name called using bracket notation
     //console.log(currentSongFromAlbum.title);
+ }
+ 
+ var getSongNumberCell = function(number){
+     return $('.song-item-number[data-song-number="' + number + '"]')
  }
 
 
@@ -234,7 +239,7 @@ $(document).ready(function() {
         $nextSongNumberCell.html(pauseButtonTemplate);
         $lastSongNumberCell.html(lastSongNumber);
     });
-    $previousButton.click(previousSong);
+    //$previousButton.click(previousSong);
     //$nextButton.click(nextSong);
     albumImage.addEventListener("click", function(event){
         n++;
