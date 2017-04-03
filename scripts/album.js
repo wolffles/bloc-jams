@@ -29,7 +29,7 @@ var createSongRow = function(songNumber, songName, songLength) {
             songNumberCell.html(songNumber);
         }
     };
-  /*  
+   
     var controlUpdate = function(){
         $('.currently-playing .song-name').text(currentSongFromAlbum.title);
         $('.currently-playing .artist-name').text(currentAlbum.artist);
@@ -91,7 +91,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         $previousSongNumberCell.html(pauseButtonTemplate);
         $lastSongNumberCell.html(lastSongNumber);
     }
-*/
+
     
     $row.click(function(event){
         var songNumber = $(this).find(".song-item-number").attr('data-song-number')
@@ -235,6 +235,8 @@ $(document).ready(function() {
         $lastSongNumberCell.html(lastSongNumber);
     });
     
+    //$previousButton.click(previousSong);
+    //$nextButton.click(nextSong);
     
     albumImage.addEventListener("click", function(event){
         n++;
