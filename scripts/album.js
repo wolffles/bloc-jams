@@ -201,21 +201,15 @@ var togglePlayFromPlayerBar = function(event) {
     if (currentSoundFile == null) {
         
     }else {
-            if ($controlPP.html() == playerBarPlayButton) {
-                getSongNumberCell(currentlyPlayingSong).html(pauseButtonTemplate);
-                $controlPP.html(playerBarPauseButton);
-                currentSoundFile.play();
-            } else {
-                if (currentSoundFile.isPaused()) {
-                getSongNumberCell(currentlyPlayingSong).html(pauseButtonTemplate);
-                $controlPP.html(playerBarPauseButton);
-                currentSoundFile.play();
-                } else {
-                    getSongNumberCell(currentlyPlayingSong).html(playButtonTemplate);
-                    $controlPP.html(playerBarPlayButton);
-                    currentSoundFile.pause();   
-                }
-           }
+        if (currentSoundFile.isPaused()) {
+            getSongNumberCell(currentlyPlayingSong).html(pauseButtonTemplate);
+            $controlPP.html(playerBarPauseButton);
+            currentSoundFile.play();
+        } else {
+            getSongNumberCell(currentlyPlayingSong).html(playButtonTemplate);
+            $controlPP.html(playerBarPlayButton);
+            currentSoundFile.pause();   
+        }
     }
 };
 
