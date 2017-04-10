@@ -201,11 +201,10 @@ var togglePlayFromPlayerBar = function(event) {
     if (currentSoundFile == null) {
         
     }else {
-            if ($controlPP.innerHTML == playerBarPlayButton) {
-              $row.find(".song-item-number").html(pauseButtonTemplate);
-              $controlPP.html(playerBarPauseButton);
-              currentSoundFile.play();
-              controlUpdate();
+            if ($controlPP.html() == playerBarPlayButton) {
+                getSongNumberCell(currentlyPlayingSong).html(pauseButtonTemplate);
+                $controlPP.html(playerBarPauseButton);
+                currentSoundFile.play();
             } else {
                 if (currentSoundFile.isPaused()) {
                 getSongNumberCell(currentlyPlayingSong).html(pauseButtonTemplate);
