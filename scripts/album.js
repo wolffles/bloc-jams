@@ -140,6 +140,7 @@ var controlUpdate = function(){
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
 
     $controlPP.html(playerBarPauseButton);
+    updateSeekBarWhileSongPlays()
 
 };
 var nextSong = function(event) {
@@ -199,6 +200,10 @@ var previousSong = function(event){
     $lastSongNumberCell.html(lastSongNumber);
 }
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    $('.currently-playing .current-time').html(filterTimeCode(currentTime));
+    $('.currently-playing .total-time').html(filterTimeCode(currentSoundFile.getDuration()))
+};
 
 var setupSeekBars = function() {
      var $seekBars = $('.player-bar .seek-bar');
@@ -254,6 +259,8 @@ var setupSeekBars = function() {
              var $seekBar = $('.seek-control .seek-bar');
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             setCurrentTimeInPlayerBar(Math.floor(this.getTime()));
+            // console.log(this.getTime());
          });
      }
  };
@@ -291,6 +298,23 @@ var togglePlayFromPlayerBar = function(event) {
         }
     }
 };
+
+var filterTimeCode = function(time){
+    var minutes = (Math.floor(time/60)).toString();
+    var seconds = (Math.floor(time%60)).toString();
+    if (minutes.length == 1){
+        minutes = "0" + minutes
+    }else if (minutes.length == 0){
+        minutes = "00"
+    };
+    
+    if (seconds.length == 1){
+        seconds = "0"+seconds
+    }else if (seconds.length == 0){
+        seconds = "00"
+    };
+    return (minutes + ":" + seconds);
+}
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
