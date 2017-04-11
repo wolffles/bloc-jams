@@ -38,29 +38,27 @@ var createSongRow = function(songNumber, songName, songLength) {
               var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSong);
               currentlyPlayingCell.html(currentlyPlayingSong);
            }
-           if (currentlyPlayingSong !== songNumber) {
-              // Switch from Pause -> Play button to pause currently playing song.
-              $(this).find(".song-item-number").html(pauseButtonTemplate);
-              $controlPP.html(playerBarPauseButton);
-              setSong(songNumber);
-              currentSoundFile.play();
-              controlUpdate();
-                var $volumeFill = $('.volume .fill');
-                var $volumeThumb = $('.volume .thumb');
-                $volumeFill.width(currentVolume + '%');
-                $volumeThumb.css({left: currentVolume + '%'})
-            } else if (currentlyPlayingSong === songNumber) {
-                if (currentSoundFile.isPaused()) {
-                $(this).find(".song-item-number").html(pauseButtonTemplate);
-                $controlPP.html(playerBarPauseButton);
-                setSong(songNumber);
-                currentSoundFile.play();
-                } else {
-                    $(this).find(".song-item-number").html(playButtonTemplate);
-                    $controlPP.html(playerBarPlayButton);
-                    setSong(songNumber);
-                    currentSoundFile.pause();   
-                }
+       if (currentlyPlayingSong !== songNumber) {
+          // Switch from Pause -> Play button to pause currently playing song.
+          $(this).find(".song-item-number").html(pauseButtonTemplate);
+          $controlPP.html(playerBarPauseButton);
+          setSong(songNumber);
+          currentSoundFile.play();
+          controlUpdate();
+            var $volumeFill = $('.volume .fill');
+            var $volumeThumb = $('.volume .thumb');
+            $volumeFill.width(currentVolume + '%');
+            $volumeThumb.css({left: currentVolume + '%'})
+        } else if (currentlyPlayingSong === songNumber) {
+            if (currentSoundFile.isPaused()) {
+            $(this).find(".song-item-number").html(pauseButtonTemplate);
+            $controlPP.html(playerBarPauseButton);
+            currentSoundFile.play();
+            } else {
+                $(this).find(".song-item-number").html(playButtonTemplate);
+                $controlPP.html(playerBarPlayButton);
+                currentSoundFile.pause();
+            }
             /*    
             // Switch from Play -> Pause button to indicate new song is playing.
               $(this).find(".song-item-number").html(pauseButtonTemplate);
@@ -121,6 +119,7 @@ var createSongRow = function(songNumber, songName, songLength) {
          preload: true
      });
      setVolume(currentVolume);
+     updateSeekBarWhileSongPlays()
  };
 
  var setVolume = function(volume) {
@@ -141,6 +140,7 @@ var controlUpdate = function(){
 
     $controlPP.html(playerBarPauseButton);
     updateSeekBarWhileSongPlays()
+    
 
 };
 var nextSong = function(event) {
@@ -202,7 +202,7 @@ var previousSong = function(event){
 
 var setCurrentTimeInPlayerBar = function(currentTime) {
     $('.currently-playing .current-time').html(filterTimeCode(currentTime));
-    $('.currently-playing .total-time').html(filterTimeCode(currentSoundFile.getDuration()))
+    $('.currently-playing .total-time').html(filterTimeCode(currentSongFromAlbum.duration));
 };
 
 var setupSeekBars = function() {
@@ -260,7 +260,8 @@ var setupSeekBars = function() {
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
              setCurrentTimeInPlayerBar(Math.floor(this.getTime()));
-            // console.log(this.getTime());
+             //console.log(Math.floor(this.getTime()));
+             
          });
      }
  };
@@ -299,7 +300,7 @@ var togglePlayFromPlayerBar = function(event) {
     }
 };
 
-var filterTimeCode = function(time){
+var filterTimeCode = function(time=0){
     var minutes = (Math.floor(time/60)).toString();
     var seconds = (Math.floor(time%60)).toString();
     if (minutes.length == 1){
